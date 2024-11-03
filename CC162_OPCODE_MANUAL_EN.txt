@@ -1,0 +1,78 @@
+0-15 = Data/Address bits
+15-28 = OPCODE bits
+
+Data/Address bus OPCODES
+
+ALU OPCODE 
+
+	Register select are located in first 4 bits (0-3 bit)
+
+Default (Last 8 data bits = 0)
+...0000 (In Assembly) Is A, A
+
+Bits from 0-3 are responsible for chosing 2nd register
+...0001 is A, B
+...0010 is A, C
+...0011 is A,D
+
+Bits from 3-7 are responsible for chosing 1st register
+...0100 is B, A
+...1000 is C, A
+...1100 is D, A
+
+   54	Negative ALU inpits are located in bits 4 and 5
+
+...00... doesn't negate 	(For example A, A)
+...01... negates input 1	(For example -A, A)
+...10... negates input 2	(For example A, -A)
+...11... negates both inputs	(For example -A, -A)
+
+	Bits 6 and 7 are not used
+
+   98	Bits 8 and 9 change operation in AU and LU
+
+...00... is Addition or AND gate
+...01... is Subtraction or OR gate
+...10... is Multiplication or XOR gate
+...11... only devides (Logic output will = input 2)
+
+	Bit 10 will change output form AU to LU (AU is default output)
+
+OPCODE outside of ALU
+
+	Bit 11 writes data from ALU to output register (OUT_REG)
+
+	Bit 12 Resets OUT_REG
+
+	Bits from 13-15 are not used
+
+OPCODES that dont use Data/Address bus (bit 15-27)
+
+	Bits 16-19 write data from Data/Address bus to register from A to D
+
+Bit 16 - reg A
+Bit 17 - reg B
+Bit 18 - reg C
+Bit 19 - reg D
+
+	Bits 20-23 resets value inside registers from A to D
+
+Bit 20 - reg A
+Bit 21 - reg B
+Bit 22 - reg C
+Bit 23 - reg D
+
+	Bit 24 writes data from data/address bus into RAM
+
+	Bit 25 outputs data from  RAM into data/address bus
+
+	Bit 26 writes addres from data/address bus to RAR (Ram address register)
+
+	Don't use bit 27 for now (it't jump command that can cause infinite loop in your program, for now it's unpluged to not cause any harm)
+
+	Bit 28 goes to first step of a program (address 0), it can also be done from control panel by switching switch nr.1
+
+Control Panel
+
+SW.1 resets program
+SW.2 Enables CPU
